@@ -249,17 +249,23 @@ window.addEventListener('load', () => {
 document.addEventListener('DOMContentLoaded', () => {
   const logoSymbol = document.querySelector('.logo-group .logo-symbol');
   
-  // Double-click / Double-tap backdoor trigger on the header "B" symbol
-  let clickCount = 0;
   if (logoSymbol) {
-    logoSymbol.addEventListener('click', (e) => {
+    // 1. Desktop Double Click
+    logoSymbol.addEventListener('dblclick', (e) => {
       e.preventDefault();
-      clickCount++;
-      if (clickCount === 2) {
-        clickCount = 0;
+      window.location.href = "admin.html";
+    });
+
+    // 2. Mobile / Touchscreen Double Tap
+    let lastTap = 0;
+    logoSymbol.addEventListener('touchend', (e) => {
+      const currentTime = new Date().getTime();
+      const tapLength = currentTime - lastTap;
+      if (tapLength < 400 && tapLength > 0) {
+        e.preventDefault();
         window.location.href = "admin.html";
       }
-      setTimeout(() => clickCount = 0, 800);
+      lastTap = currentTime;
     });
   }
 });
