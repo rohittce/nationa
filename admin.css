@@ -1,0 +1,615 @@
+/* --- Bipin Kumar Singh Administrative Workspace Stylesheet --- */
+
+:root {
+  --admin-bg: #030a16;
+  --admin-card-bg: rgba(10, 25, 47, 0.4);
+  --admin-border: rgba(0, 212, 178, 0.15);
+  --admin-border-focus: rgba(0, 212, 178, 0.5);
+  
+  /* Status alert colors */
+  --alert-critical: #ff5e62;
+  --alert-warning: #ffa600;
+  --alert-info: #00d4b2;
+  --alert-anniversary: #ec4899;
+  --alert-birthday: #8b5cf6;
+}
+
+body {
+  background-color: var(--admin-bg);
+  color: var(--primary);
+  font-family: 'Outfit', sans-serif;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Glow Accents */
+.glow-accent {
+  position: absolute;
+  width: 45vw;
+  height: 45vw;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.08;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.glow-1 {
+  background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+  top: -10%;
+  right: -5%;
+}
+
+.glow-2 {
+  background: radial-gradient(circle, #3b82f6 0%, transparent 70%);
+  bottom: -10%;
+  left: -5%;
+}
+
+.admin-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Header */
+.admin-header {
+  border-bottom: 1px solid var(--admin-border);
+  background-color: rgba(3, 10, 22, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.admin-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.admin-back-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.admin-back-link:hover {
+  color: var(--accent);
+}
+
+.admin-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.admin-logo .logo-symbol {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.admin-logo .logo-text {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 750;
+  color: var(--primary);
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-logo .logo-text span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* Login Card View */
+.admin-login-card {
+  max-width: 450px;
+  margin: 10vh auto;
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  padding: 3rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(12px);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.admin-title {
+  font-size: 1.75rem;
+  font-weight: 750;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.admin-subtitle {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Dashboard Layout */
+.admin-main {
+  flex: 1;
+  padding-top: 2rem;
+  padding-bottom: 3rem;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 992px) {
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Sidebar Tab buttons styling */
+.dashboard-sidebar {
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (max-width: 992px) {
+  .admin-tabs {
+    flex-direction: row;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--admin-border);
+  }
+}
+
+.admin-tabs .admin-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0.85rem 1.25rem;
+  color: var(--text-secondary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-tabs .admin-tab-btn:hover {
+  color: var(--primary);
+  background-color: rgba(255, 255, 255, 0.03);
+}
+
+.admin-tabs .admin-tab-btn.active {
+  color: var(--accent);
+  background-color: rgba(0, 212, 178, 0.05);
+  border-color: var(--admin-border);
+}
+
+/* Content Panel */
+.dashboard-content {
+  background-color: var(--admin-card-bg);
+  border: 1px solid var(--admin-border);
+  border-radius: 16px;
+  padding: 2.5rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(12px);
+  min-height: 500px;
+}
+
+.content-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+
+/* Updates of the Day (Notification Tray) styles */
+.notification-tray-section {
+  background-color: rgba(10, 25, 47, 0.25);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.tray-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.85rem;
+  margin-bottom: 1rem;
+}
+
+.tray-title-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--accent);
+}
+
+.tray-title {
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tray-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  background-color: rgba(0, 212, 178, 0.1);
+  color: var(--accent);
+}
+
+.tray-badge.alert-active {
+  background-color: rgba(255, 94, 98, 0.1);
+  color: var(--alert-critical);
+}
+
+/* Notification Items */
+.tray-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.tray-empty-state {
+  text-align: center;
+  padding: 1rem 0;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.notif-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.85rem 1.25rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  font-size: 0.9rem;
+  transition: transform 0.2s ease;
+}
+
+.notif-item:hover {
+  transform: translateX(4px);
+}
+
+.notif-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.notif-icon {
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.notif-name {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.notif-meta {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Notification Type Variations */
+.notif-birthday {
+  background-color: rgba(139, 92, 246, 0.05);
+  border-left: 3px solid var(--alert-birthday);
+}
+
+.notif-anniversary {
+  background-color: rgba(236, 72, 153, 0.05);
+  border-left: 3px solid var(--alert-anniversary);
+}
+
+.notif-expiry-7 {
+  background-color: rgba(255, 94, 98, 0.05);
+  border-left: 3px solid var(--alert-critical);
+}
+
+.notif-expiry-15 {
+  background-color: rgba(255, 166, 0, 0.05);
+  border-left: 3px solid var(--alert-warning);
+}
+
+.notif-expiry-30 {
+  background-color: rgba(0, 212, 178, 0.05);
+  border-left: 3px solid var(--alert-info);
+}
+
+/* Badges inside notifications */
+.notif-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+}
+
+.notif-birthday .notif-badge {
+  background-color: rgba(139, 92, 246, 0.1);
+  color: #a78bfa;
+}
+
+.notif-anniversary .notif-badge {
+  background-color: rgba(236, 72, 153, 0.1);
+  color: #f472b6;
+}
+
+.notif-expiry-7 .notif-badge {
+  background-color: rgba(255, 94, 98, 0.1);
+  color: #ffa4a6;
+}
+
+.notif-expiry-15 .notif-badge {
+  background-color: rgba(255, 166, 0, 0.1);
+  color: #ffca66;
+}
+
+.notif-expiry-30 .notif-badge {
+  background-color: rgba(0, 212, 178, 0.1);
+  color: var(--accent);
+}
+
+/* Forms inside Admin Dashboard */
+.admin-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.admin-form-group label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.admin-form-group input,
+.admin-form-group select,
+.admin-form-group textarea {
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  background-color: rgba(3, 10, 22, 0.5);
+  color: var(--primary);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.admin-form-group input:focus,
+.admin-form-group select:focus,
+.admin-form-group textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 10px rgba(0, 212, 178, 0.1);
+}
+
+.admin-grid-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.admin-grid-form .span-full {
+  grid-column: span 2;
+}
+
+@media (max-width: 576px) {
+  .admin-grid-form {
+    grid-template-columns: 1fr;
+  }
+  .admin-grid-form .span-full {
+    grid-column: span 1;
+  }
+}
+
+.btn-full {
+  width: 100%;
+  justify-content: center;
+  padding: 0.9rem;
+}
+
+.admin-error-msg {
+  color: var(--alert-critical);
+  font-size: 0.85rem;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Table Directory View */
+.table-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .table-header-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .admin-search-bar-wrapper {
+    width: 100%;
+  }
+}
+
+.admin-search-bar-wrapper {
+  flex: 1;
+  max-width: 380px;
+}
+
+.admin-search-bar-wrapper input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 8px;
+  background-color: rgba(3, 10, 22, 0.5);
+  color: var(--primary);
+  font-size: 0.9rem;
+}
+
+.admin-table-container {
+  overflow-x: auto;
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  background-color: rgba(3, 10, 22, 0.2);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.9rem;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  white-space: nowrap;
+}
+
+.admin-table th {
+  background-color: rgba(0, 212, 178, 0.02);
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.admin-table tr:hover td {
+  background-color: rgba(255, 255, 255, 0.01);
+}
+
+.admin-table tr:last-child td {
+  border-bottom: none;
+}
+
+.admin-table td {
+  color: var(--primary);
+}
+
+.btn-delete {
+  background-color: rgba(255, 94, 98, 0.08);
+  color: var(--alert-critical);
+  border: 1px solid rgba(255, 94, 98, 0.15);
+  padding: 0.4rem 0.85rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-delete:hover {
+  background-color: var(--alert-critical);
+  color: #ffffff;
+  border-color: var(--alert-critical);
+  box-shadow: 0 4px 12px rgba(255, 94, 98, 0.2);
+}
+
+.no-clients-message {
+  padding: 4rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+/* Settings, Divider, and textareas */
+.settings-divider {
+  border: none;
+  border-top: 1px solid var(--admin-border);
+  margin: 2.5rem 0;
+}
+
+.backup-actions {
+  margin-bottom: 2rem;
+}
+
+.restore-actions textarea {
+  width: 100%;
+  min-height: 120px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  resize: vertical;
+}
+
+/* Toast Messages */
+.toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  background-color: #0b1a30;
+  border: 1px solid var(--accent);
+  color: var(--primary);
+  padding: 0.85rem 1.5rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}

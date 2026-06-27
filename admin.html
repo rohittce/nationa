@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bipin Kumar Singh — Executive Client Portal</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  
+  <!-- CSS Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+  <!-- Background Glow Accents -->
+  <div class="glow-accent glow-1"></div>
+  <div class="glow-accent glow-2"></div>
+
+  <div class="admin-wrapper">
+    <!-- Header/Navigation -->
+    <header class="admin-header">
+      <div class="container admin-header-content">
+        <a href="index.html" class="admin-back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Back to Portfolio
+        </a>
+        <div class="admin-logo">
+          <span class="logo-symbol">B</span>
+          <span class="logo-text">Bipin Kumar Singh <span>Agency Portal</span></span>
+        </div>
+        <button id="adminLogoutBtn" class="btn btn-secondary btn-sm" style="display: none;">Sign Out</button>
+      </div>
+    </header>
+
+    <main class="container admin-main">
+      <!-- Login View -->
+      <div id="adminLoginView" class="admin-login-card">
+        <div class="login-header">
+          <h2 class="admin-title">Executive Admin Portal</h2>
+          <p class="admin-subtitle">Provide your security credentials to access the client database.</p>
+        </div>
+        <form id="adminLoginForm">
+          <div class="admin-form-group">
+            <label for="adminUsername">Username</label>
+            <input type="text" id="adminUsername" required placeholder="Enter username">
+          </div>
+          <div class="admin-form-group">
+            <label for="adminPassword">Password</label>
+            <input type="password" id="adminPassword" required placeholder="Enter password">
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Authenticate</button>
+          <p id="loginError" class="admin-error-msg"></p>
+        </form>
+      </div>
+
+      <!-- Dashboard View (Hidden initially) -->
+      <div id="adminDashboardView" class="admin-dashboard" style="display: none;">
+        
+        <!-- Updates of the Day (Notification Tray) -->
+        <section id="notificationTray" class="notification-tray-section">
+          <div class="tray-header">
+            <div class="tray-title-group">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <h4 class="tray-title">Updates of the Day</h4>
+            </div>
+            <span id="trayAlertCount" class="tray-badge">Checking...</span>
+          </div>
+          <div id="trayContent" class="tray-content">
+            <!-- Populated dynamically -->
+          </div>
+        </section>
+
+        <!-- Dashboard Layout Grid -->
+        <div class="dashboard-grid">
+          <!-- Left Navigation Sidebar -->
+          <aside class="dashboard-sidebar">
+            <div class="admin-tabs">
+              <button class="admin-tab-btn active" data-tab="tabClients">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                Active Clients
+              </button>
+              <button class="admin-tab-btn" data-tab="tabAddClient">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                Add New Client
+              </button>
+              <button class="admin-tab-btn" data-tab="tabBackup">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                Database Backup
+              </button>
+            </div>
+          </aside>
+
+          <!-- Right Content Area -->
+          <div class="dashboard-content">
+            
+            <!-- Tab: Clients Grid -->
+            <div id="tabClients" class="admin-tab-content active">
+              <div class="table-header-actions">
+                <h3 class="content-title">Client Directory</h3>
+                <div class="admin-search-bar-wrapper">
+                  <input type="text" id="clientSearch" placeholder="Search by name, mobile, or policy type...">
+                </div>
+              </div>
+              <div class="admin-table-container">
+                <table class="admin-table">
+                  <thead>
+                    <tr>
+                      <th>Client Name</th>
+                      <th>Mobile Number</th>
+                      <th>Birthday</th>
+                      <th>Anniversary</th>
+                      <th>Policy Line</th>
+                      <th>Expiry Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody id="clientTableBody">
+                    <!-- Loaded dynamically -->
+                  </tbody>
+                </table>
+                <div id="noClientsMsg" class="no-clients-message" style="display: none;">
+                  No client records found. Go to the "Add New Client" tab to populate the list.
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab: Add Client Form -->
+            <div id="tabAddClient" class="admin-tab-content">
+              <h3 class="content-title">Register New Customer</h3>
+              <form id="addClientForm" class="admin-grid-form">
+                <div class="admin-form-group">
+                  <label for="clientName">Customer Full Name</label>
+                  <input type="text" id="clientName" required placeholder="Ramesh Kumar">
+                </div>
+                <div class="admin-form-group">
+                  <label for="clientMobile">Mobile Number</label>
+                  <input type="tel" id="clientMobile" required placeholder="+91 9431092039">
+                </div>
+                <div class="admin-form-group">
+                  <label for="clientBirthday">Birthday (MM-DD)</label>
+                  <input type="text" id="clientBirthday" required placeholder="06-28" pattern="^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$" title="Format: MM-DD (e.g. 06-28)">
+                </div>
+                <div class="admin-form-group">
+                  <label for="clientAnniversary">Marriage Anniversary (MM-DD, Optional)</label>
+                  <input type="text" id="clientAnniversary" placeholder="11-23" pattern="^(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$" title="Format: MM-DD (e.g. 11-23)">
+                </div>
+                <div class="admin-form-group">
+                  <label for="clientPolicy">Policy Cover Line</label>
+                  <select id="clientPolicy" required>
+                    <option value="Motor">Motor Insurance</option>
+                    <option value="Health">Health Insurance</option>
+                    <option value="Shop">Shop Insurance</option>
+                    <option value="Fire">Fire & Burglary</option>
+                  </select>
+                </div>
+                <div class="admin-form-group">
+                  <label for="clientExpiry">Policy Expiry Date</label>
+                  <input type="date" id="clientExpiry" required>
+                </div>
+                <div class="admin-form-group span-full">
+                  <button type="submit" class="btn btn-primary">Save Client Record</button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Tab: Backup / Recovery / Settings -->
+            <div id="tabBackup" class="admin-tab-content">
+              <div class="backup-restore-section">
+                <h3 class="content-title">Database Sync & Disaster Recovery</h3>
+                <p class="settings-subtitle">Back up the client registry directly to your private Telegram chat, or restore from a previously saved JSON text block.</p>
+                
+                <div class="backup-actions">
+                  <button id="backupDbBtn" class="btn btn-primary">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    Sync & Backup to Telegram
+                  </button>
+                </div>
+
+                <div class="restore-actions">
+                  <label for="restoreDbInput" style="font-weight: 600; margin-bottom: 0.5rem; display: block; color: var(--primary);">Paste JSON Backup String to Restore</label>
+                  <textarea id="restoreDbInput" placeholder='Paste backup string here, e.g. [{"name":"Ramesh",...}]'></textarea>
+                  <button id="restoreDbBtn" class="btn btn-secondary" style="margin-top: 0.75rem;">Restore from Text</button>
+                </div>
+              </div>
+
+              <hr class="settings-divider">
+
+              <!-- Password Change Section -->
+              <div class="change-password-section">
+                <h3 class="content-title">Change Administrative Password</h3>
+                <p class="settings-subtitle">Update your secure login password. This will automatically re-encrypt your client database.</p>
+                <form id="changePasswordForm" class="settings-form">
+                  <div class="admin-form-group">
+                    <label for="currentPassword">Current Password</label>
+                    <input type="password" id="currentPassword" required placeholder="Enter current password">
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="newPassword">New Password</label>
+                    <input type="password" id="newPassword" required placeholder="Enter new password">
+                  </div>
+                  <div class="admin-form-group">
+                    <label for="confirmNewPassword">Confirm New Password</label>
+                    <input type="password" id="confirmNewPassword" required placeholder="Confirm new password">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Change Password</button>
+                  <p id="passwordChangeMessage" class="admin-error-msg" style="color: #00d4b2; margin-top: 0.5rem;"></p>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Toast Message Element -->
+  <div id="toast" class="toast"></div>
+
+  <!-- CryptoJS Cryptography Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <!-- Admin Controller script -->
+  <script src="admin.js"></script>
+</body>
+</html>
