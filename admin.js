@@ -266,7 +266,23 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffTime = expDate - today;
         const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
         
-        if (diffDays === 7 || diffDays === 15 || diffDays === 30) {
+        if (diffDays === 0) {
+          updates.push({
+            type: 'expiry-critical',
+            name: client.name,
+            mobile: client.mobile,
+            text: `Policy cover (${escapeHTML(client.policy)}) expires TODAY! ⚠️ Action required: ${client.mobile}`,
+            badge: 'Expiring Today'
+          });
+        } else if (diffDays < 0) {
+          updates.push({
+            type: 'expiry-critical',
+            name: client.name,
+            mobile: client.mobile,
+            text: `Policy cover (${escapeHTML(client.policy)}) EXPIRED on ${client.expiry}! ❌ Action required: ${client.mobile}`,
+            badge: 'Expired'
+          });
+        } else if (diffDays === 7 || diffDays === 15 || diffDays === 30) {
           updates.push({
             type: `expiry-${diffDays}`,
             name: client.name,
@@ -295,7 +311,7 @@ document.addEventListener('DOMContentLoaded', () => {
       let icon = '🔔';
       if (up.type === 'birthday') icon = '🎂';
       if (up.type === 'anniversary') icon = '💖';
-      if (up.type === 'expiry-7') icon = '🔴';
+      if (up.type === 'expiry-7' || up.type === 'expiry-critical') icon = '🔴';
       if (up.type === 'expiry-15') icon = '🟡';
       if (up.type === 'expiry-30') icon = '🔵';
 
@@ -328,6 +344,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     let birthdaysToday = [];
     let anniversariesToday = [];
+    let expiriesToday = [];
     let expiries30Days = [];
     let expiries15Days = [];
     let expiries7Days = [];
@@ -342,13 +359,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const diffTime = expDate - today;
         const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
         
-        if (diffDays === 30) expiries30Days.push(client);
+        if (diffDays === 0) expiriesToday.push(client);
+        else if (diffDays === 30) expiries30Days.push(client);
         else if (diffDays === 15) expiries15Days.push(client);
         else if (diffDays === 7) expiries7Days.push(client);
       }
     });
     
-    if (birthdaysToday.length === 0 && anniversariesToday.length === 0 && expiries30Days.length === 0 && expiries15Days.length === 0 && expiries7Days.length === 0) {
+    if (birthdaysToday.length === 0 && anniversariesToday.length === 0 && expiriesToday.length === 0 && expiries30Days.length === 0 && expiries15Days.length === 0 && expiries7Days.length === 0) {
       localStorage.setItem('bipin_last_notification_date', todayStr);
       return;
     }
@@ -359,6 +377,14 @@ document.addEventListener('DOMContentLoaded', () => {
       msg += `🎂 *Birthdays Today:*\n`;
       birthdaysToday.forEach(c => {
         msg += `• ${c.name} (${c.mobile}) - Policy: ${c.policy}\n`;
+      });
+      msg += `\n`;
+    }
+    
+    if (expiriesToday.length > 0) {
+      msg += `🚨 *Policies Expiring TODAY (Critical):*\n`;
+      expiriesToday.forEach(c => {
+        msg += `• ${c.name} (${c.mobile}) - ${c.policy} (Critical Expiry)\n`;
       });
       msg += `\n`;
     }
