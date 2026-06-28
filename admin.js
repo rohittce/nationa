@@ -17,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const loginError = document.getElementById('loginError');
   const logoutBtn = document.getElementById('adminLogoutBtn');
 
-  // Verify Admin Session on Page Load
-  checkAdminSession();
 
   function checkAdminSession() {
     if (sessionStorage.getItem('bipin_admin_session') === 'true') {
@@ -553,6 +551,9 @@ document.addEventListener('DOMContentLoaded', () => {
       showToast("Password updated successfully!", "success");
     });
   }
+
+  // Verify Admin Session on Page Load (after all elements and handlers are initialized)
+  checkAdminSession();
 
   // --- Utility Helpers ---
   function escapeHTML(str) {
